@@ -1,4 +1,3 @@
-> Stek:
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -142,7 +141,6 @@
         
         @keyframes scanline {
 
-> Stek:
 0% { top: 0; }
             100% { top: 100%; }
         }
@@ -190,13 +188,6 @@
             margin: 0 auto;
         }
 
-        .auth-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-
         .categories {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -239,133 +230,6 @@
             justify-content: space-between;
             color: rgba(255,255,255,0.5);
             font-size: 14px;
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: var(--darker);
-            padding: 30px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 500px;
-            border: 1px solid var(--primary);
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            color: var(--light);
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--primary-light);
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(0, 255, 170, 0.3);
-            border-radius: 5px;
-            color: var(--light);
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .submit-btn {
-
-> Stek:
-width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--dark);
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            background: linear-gradient(135deg, var(--primary-light), var(--primary));
-        }
-
-        /* User profile styles */
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--dark);
-        }
-
-        .user-info h3 {
-            color: var(--primary-light);
-            margin-bottom: 5px;
-        }
-
-        .user-info p {
-            color: rgba(255,255,255,0.7);
-            font-size: 14px;
-        }
-
-        .user-stats {
-            display: flex;
-            gap: 20px;
-            margin-top: 10px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .stat-label {
-            color: rgba(255,255,255,0.5);
-            font-size: 12px;
         }
 
         /* Thread styles */
@@ -439,7 +303,8 @@ width: 100%;
             }
             
             .categories {
-                grid-template-columns: 1fr;
+
+grid-template-columns: 1fr;
             }
             
             nav {
@@ -457,19 +322,12 @@ width: 100%;
         <a href="https://steklys.github.io/WixtyFirmwares.github.io/" target="_self">Main Site</a>
         <a href="#categories">Categories</a>
         <a href="#threads">Threads</a>
-        <a href="https://steklys.github.io/regforumewixty.github.io/" id="profile-link">Profile</a>
     </nav>
     
     <div class="container">
         <div class="forum-header">
             <h1>Wixty Firmwares Community</h1>
             <p>Join our community of firmware enthusiasts, developers and power users. Share knowledge, ask questions and collaborate.</p>
-        </div>
-
-> Stek:
-<div class="auth-buttons">
-            <button class="btn" id="login-btn" onclick="window.location.href='https://steklys.github.io/regforumewixty.github.io/'">Login</button>
-            <button class="btn" id="register-btn">Register</button>
         </div>
 
         <div id="categories">
@@ -535,16 +393,15 @@ width: 100%;
             <h2 style="color: var(--primary-light); margin-bottom: 20px;">Latest Threads</h2>
             
             <div class="thread-list">
-                <div class="thread-item glass">
+
+<div class="thread-item glass">
                     <div class="thread-header">
                         <a href="#" class="thread-title">Firmware Toolkit v2.5.0 Release Notes</a>
                         <span class="thread-meta">Today, 14:30</span>
                     </div>
                     <p class="thread-excerpt">Detailed release notes for the latest version of Firmware Toolkit Pro with all new features and bug fixes...</p>
                     <div class="thread-footer">
-
-> Stek:
-<span>Posted by <strong style="color: var(--primary-light);">WixtyAdmin</strong></span>
+                        <span>Posted by <strong style="color: var(--primary-light);">WixtyAdmin</strong></span>
                         <div class="thread-stats">
                             <span class="thread-stat">👍 24</span>
                             <span class="thread-stat">💬 8</span>
@@ -608,74 +465,11 @@ width: 100%;
     
     <footer class="glass">
         <p>© 2025 Wixty Firmwares Forum. All rights reserved.</p>
-        <p style="margin-top: 10px;">Community-driven platform for firmware enthusiasts.</p>
-    </footer>
-    
-    <!-- Register Modal -->
-    <div class="modal" id="register-modal">
-        <div class="modal-content glass">
-            <span class="close-modal">&times;</span>
-            <h2 style="color: var(--primary-light); margin-bottom: 20px;">Register</h2>
-            <form id="register-form">
-                <div class="form-group">
-                    <label for="register-username">Username</label>
 
-> Stek:
-<input type="text" id="register-username" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-email">Email</label>
-                    <input type="email" id="register-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-password">Password</label>
-                    <input type="password" id="register-password" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-confirm">Confirm Password</label>
-                    <input type="password" id="register-confirm" required>
-                </div>
-                <button type="submit" class="submit-btn">Create Account</button>
-            </form>
-        </div>
-    </div>
-    
+<p style="margin-top: 10px;">Community-driven platform for firmware enthusiasts.</p>
+    </footer>
+
     <script>
-        // Удалена логика модальных окон для входа и профиля
-        const registerModal = document.getElementById('register-modal');
-        const registerBtn = document.getElementById('register-btn');
-        const closeButtons = document.querySelectorAll('.close-modal');
-        
-        // Показываем только модалку регистрации
-        registerBtn.onclick = () => registerModal.style.display = 'flex';
-        
-        // Закрытие модалки
-        closeButtons.forEach(btn => {
-            btn.onclick = () => {
-                registerModal.style.display = 'none';
-            };
-        });
-        
-        // Закрытие при клике вне модалки
-        window.onclick = (e) => {
-            if (e.target === registerModal) registerModal.style.display = 'none';
-        };
-        
-        // Форма регистрации
-        document.getElementById('register-form').onsubmit = (e) => {
-            e.preventDefault();
-            const password = document.getElementById('register-password').value;
-            const confirm = document.getElementById('register-confirm').value;
-            
-            if (password !== confirm) {
-                alert('Passwords do not match!');
-                return;
-            }
-            
-            alert('Account created! Verification email sent.');
-            registerModal.style.display = 'none';
-        };
-        
         // Анимация при загрузке
         document.addEventListener('DOMContentLoaded', () => {
             const elements = document.querySelectorAll('.category-card, .thread-item, .btn');

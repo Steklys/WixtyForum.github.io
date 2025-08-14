@@ -1,0 +1,805 @@
+ > Stek:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wixty Firmwares Forum</title>
+    <style>
+        :root {
+            --primary: #00ffaa;
+            --primary-dark: #00cc88;
+            --primary-light: #66ffcc;
+            --accent: #ff5500;
+            --dark: #111111;
+            --darker: #080808;
+            --light: #f0f0f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 170, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 85, 0, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .logo {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            text-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+            font-style: italic;
+        }
+        
+        @keyframes logoGlow {
+            0% { text-shadow: 0 0 10px rgba(0, 255, 170, 0.3); }
+            100% { text-shadow: 0 0 20px rgba(255, 85, 0, 0.3); }
+        }
+        
+        nav {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            display: flex;
+            gap: 25px;
+            z-index: 90;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            position: relative;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+        }
+        
+        nav a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+        
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::before {
+            width: 100%;
+        }
+        
+        .glass {
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 170, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 40px 80px;
+        }
+        
+        .ascii-art {
+            color: var(--primary-light);
+            white-space: pre;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            text-align: center;
+            margin: 40px auto;
+            padding: 30px;
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(8, 8, 8, 0.7);
+            border: 1px solid var(--primary);
+        }
+        
+        .ascii-art::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: scanline 4s linear infinite;
+        }
+        
+        @keyframes scanline {
+
+> Stek:
+0% { top: 0; }
+            100% { top: 100%; }
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #111;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 255, 170, 0.3);
+            margin-top: auto;
+            align-self: flex-start;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 80px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        /* Forum specific styles */
+        .forum-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .forum-header h1 {
+            color: var(--primary-light);
+            margin-bottom: 10px;
+        }
+
+        .forum-header p {
+            color: rgba(255,255,255,0.7);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .category-card {
+            background: linear-gradient(145deg, rgba(21, 21, 21, 0.8), rgba(8, 8, 8, 0.9));
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 170, 0.2);
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 170, 0.15);
+            border-color: var(--primary);
+        }
+
+        .category-title {
+            font-size: 20px;
+            color: var(--primary-light);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-desc {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--darker);
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid var(--primary);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--light);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-light);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            border-radius: 5px;
+            color: var(--light);
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .submit-btn {
+
+width: 100%;
+
+> Stek:
+padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--dark);
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+        }
+
+        /* User profile styles */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .user-info h3 {
+            color: var(--primary-light);
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .stat-label {
+            color: rgba(255,255,255,0.5);
+            font-size: 12px;
+        }
+
+        /* Thread styles */
+        .thread-list {
+            margin-top: 30px;
+        }
+
+        .thread-item {
+            background: rgba(21, 21, 21, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .thread-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .thread-title {
+            color: var(--primary-light);
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .thread-title:hover {
+            text-decoration: underline;
+        }
+
+        .thread-meta {
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+        }
+
+        .thread-excerpt {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .thread-footer {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+        }
+
+        .thread-stats {
+            display: flex;
+            gap: 15px;
+        }
+
+        .thread-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .new-thread-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 100px 20px 60px;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            nav {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <span class="logo-text">Wixty Forum</span>
+    </div>
+    
+    <nav>
+        <a href="https://steklys.github.io/WixtyFirmwares.github.io/" target="_self">Main Site</a>
+        <a href="#categories">Categories</a>
+        <a href="#threads">Threads</a>
+        <a href="#" id="profile-link">Profile</a>
+    </nav>
+    
+    <div class="container">
+        <div class="forum-header">
+            <h1>Wixty Firmwares Community</h1>
+            <p>Join our community of firmware enthusiasts, developers and power users. Share knowledge, ask questions and collaborate.</p>
+        </div>
+
+        <div class="auth-buttons">
+
+<button class="btn" id="login-btn">Login</button>
+
+> Stek:
+<button class="btn" id="register-btn">Register</button>
+        </div>
+
+        <div id="categories">
+            <h2 style="color: var(--primary-light); margin-bottom: 20px;">Categories</h2>
+            <div class="categories">
+                <div class="category-card glass" onclick="window.location.href='#threads'">
+                    <h3 class="category-title">📌 Announcements</h3>
+                    <p class="category-desc">Official announcements from Wixty team about new firmware releases and updates.</p>
+                    <div class="category-stats">
+                        <span>24 Threads</span>
+                        <span>156 Posts</span>
+                    </div>
+                </div>
+                
+                <div class="category-card glass" onclick="window.location.href='#threads'">
+                    <h3 class="category-title">🔧 Firmware Toolkit</h3>
+                    <p class="category-desc">Discussion about Firmware Toolkit Pro features, issues and custom modifications.</p>
+                    <div class="category-stats">
+                        <span>87 Threads</span>
+                        <span>542 Posts</span>
+                    </div>
+                </div>
+                
+                <div class="category-card glass" onclick="window.location.href='#threads'">
+                    <h3 class="category-title">💾 Driver Unlocker</h3>
+                    <p class="category-desc">Share your experiences with Driver Unlocker and get help with specific hardware.</p>
+                    <div class="category-stats">
+                        <span>63 Threads</span>
+                        <span>389 Posts</span>
+                    </div>
+                </div>
+                
+                <div class="category-card glass" onclick="window.location.href='#threads'">
+                    <h3 class="category-title">⚡ Bootloader Kit</h3>
+                    <p class="category-desc">Advanced discussions about bootloader modifications and custom ROMs.</p>
+                    <div class="category-stats">
+                        <span>45 Threads</span>
+                        <span>287 Posts</span>
+                    </div>
+                </div>
+                
+                <div class="category-card glass" onclick="window.location.href='#threads'">
+                    <h3 class="category-title">💡 Tutorials</h3>
+                    <p class="category-desc">Step-by-step guides and tutorials for various firmware modification techniques.</p>
+                    <div class="category-stats">
+                        <span>32 Threads</span>
+                        <span>204 Posts</span>
+                    </div>
+                </div>
+                
+                <div class="category-card glass" onclick="window.open('https://t.me/WixtysupportBot', '_blank')">
+                    <h3 class="category-title">❓ Support</h3>
+                    <p class="category-desc">Get help with any issues you're facing with Wixty Firmwares products.</p>
+                    <div class="category-stats">
+                        <span>Contact us in Telegram</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="threads">
+            <h2 style="color: var(--primary-light); margin-bottom: 20px;">Latest Threads</h2>
+            
+            <div class="thread-list">
+                <div class="thread-item glass">
+                    <div class="thread-header">
+                        <a href="#" class="thread-title">Firmware Toolkit v2.5.0 Release Notes</a>
+                        <span class="thread-meta">Today, 14:30</span>
+                    </div>
+                    <p class="thread-excerpt">Detailed release notes for the latest version of Firmware Toolkit Pro with all new features and bug fixes...</p>
+                    <div class="thread-footer">
+                        <span>Posted by <strong style="color: var(--primary-light);">WixtyAdmin</strong></span>
+
+<div class="thread-stats">
+
+> Stek:
+<span class="thread-stat">👍 24</span>
+                            <span class="thread-stat">💬 8</span>
+                            <span class="thread-stat">👁️ 156</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="thread-item glass">
+                    <div class="thread-header">
+                        <a href="#" class="thread-title">How to unlock Samsung NVMe drivers</a>
+                        <span class="thread-meta">Yesterday, 18:45</span>
+                    </div>
+                    <p class="thread-excerpt">Complete guide for unlocking Samsung NVMe drivers to enable full performance mode on unsupported systems...</p>
+                    <div class="thread-footer">
+                        <span>Posted by <strong style="color: var(--primary-light);">FirmwareHacker</strong></span>
+                        <div class="thread-stats">
+                            <span class="thread-stat">👍 42</span>
+                            <span class="thread-stat">💬 15</span>
+                            <span class="thread-stat">👁️ 287</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="thread-item glass">
+                    <div class="thread-header">
+                        <a href="#" class="thread-title">Bootloader Kit not recognizing device</a>
+                        <span class="thread-meta">2 days ago, 09:12</span>
+                    </div>
+                    <p class="thread-excerpt">Having issues with Bootloader Kit not detecting my Xiaomi device. Tried all USB ports and different cables...</p>
+                    <div class="thread-footer">
+                        <span>Posted by <strong style="color: var(--primary-light);">NewUser123</strong></span>
+                        <div class="thread-stats">
+                            <span class="thread-stat">👍 5</span>
+                            <span class="thread-stat">💬 12</span>
+                            <span class="thread-stat">👁️ 89</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="thread-item glass">
+                    <div class="thread-header">
+                        <a href="#" class="thread-title">Custom ROM for ThinkPad T480</a>
+                        <span class="thread-meta">3 days ago, 22:30</span>
+                    </div>
+                    <p class="thread-excerpt">Sharing my experience creating a custom ROM for ThinkPad T480 using Wixty Bootloader Kit. Full guide inside...</p>
+                    <div class="thread-footer">
+                        <span>Posted by <strong style="color: var(--primary-light);">ThinkPadModder</strong></span>
+                        <div class="thread-stats">
+                            <span class="thread-stat">👍 78</span>
+                            <span class="thread-stat">💬 24</span>
+                            <span class="thread-stat">👁️ 432</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="#" class="btn new-thread-btn">+ Create New Thread</a>
+        </div>
+    </div>
+    
+    <footer class="glass">
+        <p>© 2025 Wixty Firmwares Forum. All rights reserved.</p>
+        <p style="margin-top: 10px;">Community-driven platform for firmware enthusiasts.</p>
+    </footer>
+    
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <h2 style="color: var(--primary-light); margin-bottom: 20px;">Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+
+<label for="login-password">Password</label>
+
+> Stek:
+<input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Register Modal -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <h2 style="color: var(--primary-light); margin-bottom: 20px;">Register</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Username</label>
+                    <input type="text" id="register-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm">Confirm Password</label>
+                    <input type="password" id="register-confirm" required>
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Profile Modal -->
+    <div class="modal" id="profile-modal">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <div class="user-profile">
+                <div class="user-avatar">W</div>
+                <div class="user-info">
+                    <h3>WixtyUser</h3>
+                    <p>Firmware Enthusiast</p>
+                    <div class="user-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">156</div>
+                            <div class="stat-label">Posts</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">Threads</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">⭐</div>
+                            <div class="stat-label">Expert</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--primary-light); margin: 20px 0 10px;">Your Activity</h3>
+            <div class="thread-list">
+                <div class="thread-item">
+                    <div class="thread-header">
+                        <a href="#" class="thread-title">How to modify SSD firmware</a>
+                        <span class="thread-meta">2 days ago</span>
+                    </div>
+                    <p class="thread-excerpt">Detailed guide for advanced SSD firmware modifications...</p>
+                    <div class="thread-footer">
+                        <span>👍 34</span>
+                    </div>
+                </div>
+                
+                <div class="thread-item">
+                    <div class="thread-header">
+                        <a href="#" class="thread-title">Driver Unlocker not working</a>
+                        <span class="thread-meta">5 days ago</span>
+                    </div>
+                    <p class="thread-excerpt">Having issues with Driver Unlocker on my Dell XPS...</p>
+                    <div class="thread-footer">
+                        <span>👍 12</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="submit-btn" style="margin-top: 20px;">Logout</button>
+        </div>
+    </div>
+    
+    <script>
+        // Modal functionality
+        const loginModal = document.getElementById('login-modal');
+
+const registerModal = document.getElementById('register-modal');
+
+> Stek:
+const profileModal = document.getElementById('profile-modal');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const profileLink = document.getElementById('profile-link');
+        const closeButtons = document.querySelectorAll('.close-modal');
+        
+        // Show modals
+        loginBtn.onclick = () => loginModal.style.display = 'flex';
+        registerBtn.onclick = () => registerModal.style.display = 'flex';
+        profileLink.onclick = (e) => {
+            e.preventDefault();
+            profileModal.style.display = 'flex';
+        };
+        
+        // Close modals
+        closeButtons.forEach(btn => {
+            btn.onclick = () => {
+                loginModal.style.display = 'none';
+                registerModal.style.display = 'none';
+                profileModal.style.display = 'none';
+            };
+        });
+        
+        // Close when clicking outside
+        window.onclick = (e) => {
+            if (e.target === loginModal) loginModal.style.display = 'none';
+            if (e.target === registerModal) registerModal.style.display = 'none';
+            if (e.target === profileModal) profileModal.style.display = 'none';
+        };
+        
+        // Form submission
+        document.getElementById('login-form').onsubmit = (e) => {
+            e.preventDefault();
+            alert('Login functionality will be implemented with backend');
+            loginModal.style.display = 'none';
+        };
+        
+        document.getElementById('register-form').onsubmit = (e) => {
+            e.preventDefault();
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            if (password !== confirm) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            alert('Account created! Verification email sent.');
+            registerModal.style.display = 'none';
+        };
+        
+        // ASCII art animation
+        const asciiArt = document.querySelector('.ascii-art');
+        if (asciiArt) {
+            setInterval(() => {
+                const hue = Math.sin(Date.now() / 3000) * 60 + 160;
+                asciiArt.style.color = hsl(${hue}, 100%, 70%);
+            }, 50);
+        }
+        
+        // Page load animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.category-card, .thread-item, .btn');
+            
+            elements.forEach((el, i) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 100 * i);
+                
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+> Stek:
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -141,6 +142,7 @@
         
         @keyframes scanline {
 
+> Stek:
 0% { top: 0; }
             100% { top: 100%; }
         }
@@ -298,10 +300,9 @@
 
         .submit-btn {
 
-width: 100%;
-
 > Stek:
-padding: 12px;
+width: 100%;
+            padding: 12px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--dark);
             border: none;
@@ -456,7 +457,7 @@ padding: 12px;
         <a href="https://steklys.github.io/WixtyFirmwares.github.io/" target="_self">Main Site</a>
         <a href="#categories">Categories</a>
         <a href="#threads">Threads</a>
-        <a href="#" id="profile-link">Profile</a>
+        <a href="https://steklys.github.io/regforumewixty.github.io/" id="profile-link">Profile</a>
     </nav>
     
     <div class="container">
@@ -465,11 +466,10 @@ padding: 12px;
             <p>Join our community of firmware enthusiasts, developers and power users. Share knowledge, ask questions and collaborate.</p>
         </div>
 
-        <div class="auth-buttons">
-
-<button class="btn" id="login-btn">Login</button>
-
-<button class="btn" id="register-btn">Register</button>
+> Stek:
+<div class="auth-buttons">
+            <button class="btn" id="login-btn" onclick="window.location.href='https://steklys.github.io/regforumewixty.github.io/'">Login</button>
+            <button class="btn" id="register-btn">Register</button>
         </div>
 
         <div id="categories">
@@ -520,11 +520,12 @@ padding: 12px;
                     </div>
                 </div>
                 
-                <div class="category-card glass" onclick="window.open('https://t.me/WixtysupportBot', '_blank')">
+                <div class="category-card glass" onclick="window.location.href='#threads'">
                     <h3 class="category-title">❓ Support</h3>
                     <p class="category-desc">Get help with any issues you're facing with Wixty Firmwares products.</p>
                     <div class="category-stats">
-                        <span>Contact us in Telegram</span>
+                        <span>112 Threads</span>
+                        <span>678 Posts</span>
                     </div>
                 </div>
             </div>
@@ -541,11 +542,11 @@ padding: 12px;
                     </div>
                     <p class="thread-excerpt">Detailed release notes for the latest version of Firmware Toolkit Pro with all new features and bug fixes...</p>
                     <div class="thread-footer">
-                        <span>Posted by <strong style="color: var(--primary-light);">WixtyAdmin</strong></span>
 
-<div class="thread-stats">
-
-<span class="thread-stat">👍 24</span>
+> Stek:
+<span>Posted by <strong style="color: var(--primary-light);">WixtyAdmin</strong></span>
+                        <div class="thread-stats">
+                            <span class="thread-stat">👍 24</span>
                             <span class="thread-stat">💬 8</span>
                             <span class="thread-stat">👁️ 156</span>
                         </div>
@@ -610,27 +611,6 @@ padding: 12px;
         <p style="margin-top: 10px;">Community-driven platform for firmware enthusiasts.</p>
     </footer>
     
-    <!-- Login Modal -->
-    <div class="modal" id="login-modal">
-        <div class="modal-content glass">
-            <span class="close-modal">&times;</span>
-            <h2 style="color: var(--primary-light); margin-bottom: 20px;">Login</h2>
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" required>
-                </div>
-                <div class="form-group">
-
-<label for="login-password">Password</label>
-
-<input type="password" id="login-password" required>
-                </div>
-                <button type="submit" class="submit-btn">Login</button>
-            </form>
-        </div>
-    </div>
-    
     <!-- Register Modal -->
     <div class="modal" id="register-modal">
         <div class="modal-content glass">
@@ -639,7 +619,9 @@ padding: 12px;
             <form id="register-form">
                 <div class="form-group">
                     <label for="register-username">Username</label>
-                    <input type="text" id="register-username" required>
+
+> Stek:
+<input type="text" id="register-username" required>
                 </div>
                 <div class="form-group">
                     <label for="register-email">Email</label>
@@ -658,105 +640,28 @@ padding: 12px;
         </div>
     </div>
     
-    <!-- Profile Modal -->
-    <div class="modal" id="profile-modal">
-        <div class="modal-content glass">
-            <span class="close-modal">&times;</span>
-            <div class="user-profile">
-                <div class="user-avatar">W</div>
-                <div class="user-info">
-                    <h3>WixtyUser</h3>
-                    <p>Firmware Enthusiast</p>
-                    <div class="user-stats">
-                        <div class="stat-item">
-                            <div class="stat-value">156</div>
-                            <div class="stat-label">Posts</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">42</div>
-                            <div class="stat-label">Threads</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">⭐</div>
-                            <div class="stat-label">Expert</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <h3 style="color: var(--primary-light); margin: 20px 0 10px;">Your Activity</h3>
-            <div class="thread-list">
-                <div class="thread-item">
-                    <div class="thread-header">
-                        <a href="#" class="thread-title">How to modify SSD firmware</a>
-                        <span class="thread-meta">2 days ago</span>
-                    </div>
-                    <p class="thread-excerpt">Detailed guide for advanced SSD firmware modifications...</p>
-                    <div class="thread-footer">
-                        <span>👍 34</span>
-                    </div>
-                </div>
-                
-                <div class="thread-item">
-                    <div class="thread-header">
-                        <a href="#" class="thread-title">Driver Unlocker not working</a>
-                        <span class="thread-meta">5 days ago</span>
-                    </div>
-                    <p class="thread-excerpt">Having issues with Driver Unlocker on my Dell XPS...</p>
-                    <div class="thread-footer">
-                        <span>👍 12</span>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="submit-btn" style="margin-top: 20px;">Logout</button>
-        </div>
-    </div>
-    
     <script>
-        // Modal functionality
-        const loginModal = document.getElementById('login-modal');
-
-const registerModal = document.getElementById('register-modal');
-
-> Stek:
-const profileModal = document.getElementById('profile-modal');
-        const loginBtn = document.getElementById('login-btn');
+        // Удалена логика модальных окон для входа и профиля
+        const registerModal = document.getElementById('register-modal');
         const registerBtn = document.getElementById('register-btn');
-        const profileLink = document.getElementById('profile-link');
         const closeButtons = document.querySelectorAll('.close-modal');
         
-        // Show modals
-        loginBtn.onclick = () => loginModal.style.display = 'flex';
+        // Показываем только модалку регистрации
         registerBtn.onclick = () => registerModal.style.display = 'flex';
-        profileLink.onclick = (e) => {
-            e.preventDefault();
-            profileModal.style.display = 'flex';
-        };
         
-        // Close modals
+        // Закрытие модалки
         closeButtons.forEach(btn => {
             btn.onclick = () => {
-                loginModal.style.display = 'none';
                 registerModal.style.display = 'none';
-                profileModal.style.display = 'none';
             };
         });
         
-        // Close when clicking outside
+        // Закрытие при клике вне модалки
         window.onclick = (e) => {
-            if (e.target === loginModal) loginModal.style.display = 'none';
             if (e.target === registerModal) registerModal.style.display = 'none';
-            if (e.target === profileModal) profileModal.style.display = 'none';
         };
         
-        // Form submission
-        document.getElementById('login-form').onsubmit = (e) => {
-            e.preventDefault();
-            alert('Login functionality will be implemented with backend');
-            loginModal.style.display = 'none';
-        };
-        
+        // Форма регистрации
         document.getElementById('register-form').onsubmit = (e) => {
             e.preventDefault();
             const password = document.getElementById('register-password').value;
@@ -771,16 +676,7 @@ const profileModal = document.getElementById('profile-modal');
             registerModal.style.display = 'none';
         };
         
-        // ASCII art animation
-        const asciiArt = document.querySelector('.ascii-art');
-        if (asciiArt) {
-            setInterval(() => {
-                const hue = Math.sin(Date.now() / 3000) * 60 + 160;
-                asciiArt.style.color = hsl(${hue}, 100%, 70%);
-            }, 50);
-        }
-        
-        // Page load animation
+        // Анимация при загрузке
         document.addEventListener('DOMContentLoaded', () => {
             const elements = document.querySelectorAll('.category-card, .thread-item, .btn');
             
@@ -798,4 +694,3 @@ const profileModal = document.getElementById('profile-modal');
     </script>
 </body>
 </html>
-

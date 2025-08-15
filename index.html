@@ -13,7 +13,7 @@
             --dark: #111111;
             --darker: #080808;
             --light: #f0f0f0;
-            --sidebar-collapsed: 60px; /* Уменьшил ширину скрытого меню на ~1/10 от 200px */
+            --sidebar-collapsed: 60px;
             --sidebar-expanded: 200px;
         }
         
@@ -64,6 +64,7 @@
             border-bottom: 1px solid rgba(0, 255, 170, 0.1);
             opacity: 0;
             transition: opacity 0.3s ease;
+            cursor: pointer;
         }
         
         .sidebar:hover .sidebar-profile {
@@ -113,6 +114,149 @@
             font-weight: bold;
         }
         
+        /* Модальное окно рейтингов */
+        .rating-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+        }
+        
+        .rating-content {
+            background: var(--darker);
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 30px rgba(0, 255, 170, 0.2);
+        }
+        
+        .rating-header {
+            text-align: center;
+            margin-bottom: 30px;
+
+}
+        
+        .rating-header h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .rating-header p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .current-rating {
+            background: rgba(0, 255, 170, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid var(--primary);
+        }
+        
+        .current-rating h3 {
+            color: var(--primary-light);
+            margin-bottom: 10px;
+        }
+        
+        .current-rating .badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: var(--darker);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .rating-levels {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .rating-level {
+            background: rgba(17, 17, 17, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .rating-level:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 170, 0.1);
+        }
+        
+        .rating-level h4 {
+            color: var(--primary-light);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .rating-level .level-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: var(--darker);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .rating-level p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .rating-level .requirements {
+            margin-top: 10px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .close-rating {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--light);
+            font-size: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-rating:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+        
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 15px 0;
+            height: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
         /* Оригинальные стили (без изменений) */
         .logo {
             position: fixed;
@@ -142,7 +286,8 @@
         }
         
         nav {
-            position: fixed;
+
+position: fixed;
             top: 25px;
             right: 25px;
             display: flex;
@@ -281,15 +426,15 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 25px;
-
-margin-bottom: 40px;
+            margin-bottom: 40px;
         }
 
         .category-card {
             background: linear-gradient(145deg, rgba(21, 21, 21, 0.8), rgba(8, 8, 8, 0.9));
             border-radius: 12px;
             padding: 25px;
-            transition: all 0.3s ease;
+
+transition: all 0.3s ease;
             border: 1px solid rgba(0, 255, 170, 0.2);
             cursor: pointer;
         }
@@ -397,19 +542,52 @@ margin-bottom: 40px;
             nav {
                 gap: 15px;
             }
+            
+            .rating-content {
+                margin: 20px 10px;
+                padding: 15px;
+            }
+            
+            .rating-levels {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Боковое меню -->
     <div class="sidebar glass">
-        <div class="sidebar-profile">
+        <div class="sidebar-profile" id="profileSection">
             <div class="profile-name" id="randomUsername">Guest</div>
             <div class="profile-badge" id="expertBadge">Newbie</div>
         </div>
     </div>
     
-    <!-- Оригинальный логотип -->
+    <!-- Модальное окно рейтингов -->
+    <div class="rating-modal" id="ratingModal">
+        <div class="rating-content glass">
+            <span class="close-rating" id="closeRating">&times;</span>
+            <div class="rating-header">
+                <h2>Rating System</h2>
+                <p>Earn reputation points and unlock new levels by being active in the community</p>
+            </div>
+            
+            <div class="current-rating">
+                <h3>Your Current Level</h3>
+                <div class="badge" id="currentRatingBadge">Newbie</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p id="progressText">0/100 points to next level</p>
+            </div>
+            
+            <div class="rating-levels" id="ratingLevels">
+                <!-- Уровни будут добавлены через JavaScript -->
+            </div>
+        </div>
+    </div>
+
+<!-- Оригинальный логотип -->
     <div class="logo">
         <span class="logo-text">Wixty Forum</span>
     </div>
@@ -433,8 +611,7 @@ margin-bottom: 40px;
             <div class="categories">
                 <div class="category-card glass" onclick="window.location.href='#threads'">
                     <h3 class="category-title">📌 Announcements</h3>
-
-<p class="category-desc">Official announcements from Wixty team about new firmware releases and updates.</p>
+                    <p class="category-desc">Official announcements from Wixty team about new firmware releases and updates.</p>
                     <div class="category-stats">
                         <span>24 Threads</span>
                         <span>156 Posts</span>
@@ -493,7 +670,8 @@ margin-bottom: 40px;
             <div class="thread-list">
                 <div class="thread-item glass" data-id="1">
                     <div class="thread-header">
-                        <a href="#" class="thread-title">Firmware Toolkit v2.5.0 Release Notes</a>
+
+<a href="#" class="thread-title">Firmware Toolkit v2.5.0 Release Notes</a>
                         <span class="thread-meta">Today, 14:30</span>
                     </div>
                     <p class="thread-excerpt">Detailed release notes for the latest version of Firmware Toolkit Pro with all new features and bug fixes...</p>
@@ -504,8 +682,7 @@ margin-bottom: 40px;
                             <span class="thread-stat"><span class="icon-comment"></span> <span class="comment-count">8</span></span>
                             <span class="thread-stat"><span class="icon-views"></span> <span class="view-count">156</span></span>
                         </div>
-
-</div>
+                    </div>
                 </div>
                 
                 <div class="thread-item glass" data-id="2">
@@ -549,7 +726,8 @@ margin-bottom: 40px;
                     <div class="thread-footer">
                         <span>Posted by <strong style="color: var(--primary-light);">ThinkPadModder</strong></span>
                         <div class="thread-stats">
-                            <span class="thread-stat"><span class="icon-like"></span> <span class="like-count">78</span></span>
+
+<span class="thread-stat"><span class="icon-like"></span> <span class="like-count">78</span></span>
                             <span class="thread-stat"><span class="icon-comment"></span> <span class="comment-count">24</span></span>
                             <span class="thread-stat"><span class="icon-views"></span> <span class="view-count">432</span></span>
                         </div>
@@ -568,17 +746,67 @@ margin-bottom: 40px;
 
     <!-- Cookie уведомление -->
     <div class="cookie-consent glass" id="cookieConsent">
-        <p>We use cookies to track thread views and improve your experience.
-
-By continuing, you agree to our use of cookies.</p>
+        <p>We use cookies to track thread views and improve your experience. By continuing, you agree to our use of cookies.</p>
         <button id="acceptCookies">Accept</button>
     </div>
 
     <script>
-        // Генерация случайного имени пользователя и уровня эксперта
+        // Генерация случайного имени пользователя
         const usernames = ["CyberHacker", "FirmwareGuru", "BiosMaster", "CodeBreaker", "KernelWizard"];
         const adjectives = ["Quantum", "Neon", "Cyber", "Binary", "Hex"];
-        const levels = ["Newbie", "Enthusiast", "Expert", "Guru", "Legend"];
+        
+        // Система рейтингов с 36 уровнями
+        const ratingSystem = {
+            levels: [
+                { name: "Newbie", points: 0, description: "Just starting out", requirements: "Register on the forum" },
+                { name: "Beginner", points: 10, description: "Getting familiar", requirements: "Make your first post" },
+                { name: "Member", points: 25, description: "Active participant", requirements: "Make 5 posts" },
+                { name: "Regular", points: 50, description: "Regular contributor", requirements: "Make 10 posts and get 5 likes" },
+                { name: "Helper", points: 100, description: "Helping others", requirements: "Get 3 posts marked as helpful" },
+                { name: "Enthusiast", points: 200, description: "Dedicated member", requirements: "Make 25 posts with 20+ likes" },
+                { name: "Expert", points: 400, description: "Knowledgeable user", requirements: "Create 3 tutorial posts" },
+                { name: "Guru", points: 700, description: "Highly respected", requirements: "Get 50+ likes and 10 helpful marks" },
+                { name: "Veteran", points: 1100, description: "Long-term contributor", requirements: "Active for 3+ months with 100+ posts" },
+                { name: "Master", points: 1600, description: "Advanced knowledge", requirements: "Create 10 high-quality posts" },
+                { name: "Elite", points: 2200, description: "Top contributor", requirements: "Get 100+ likes and 25 helpful marks" },
+                { name: "Legend", points: 3000, description: "Forum legend", requirements: "Create content used by many members" },
+                { name: "Hero", points: 4000, description: "Community hero", requirements: "Solve major community problems" },
+                { name: "Champion", points: 5200, description: "Top problem solver", requirements: "Help 50+ members with solutions" },
+                { name: "Mentor", points: 6600, description: "Guides new members", requirements: "Mentor 10 new members" },
+                { name: "Professor", points: 8200, description: "Teacher of knowledge", requirements: "Create 20+ tutorial posts" },
+                { name: "Sage", points: 10000, description: "Wise contributor", requirements: "Have 500+ high-quality posts" },
+                { name: "Oracle", points: 12100, description: "Source of wisdom", requirements: "Have 100+ helpful marks" },
+                { name: "Architect", points: 14500, description: "Builds community", requirements: "Create forum guides or resources" },
+                { name: "Innovator", points: 17200, description: "Brings new ideas", requirements: "Introduce new forum features" },
+
+{ name: "Pioneer", points: 20200, description: "Trailblazer", requirements: "First to explore new topics" },
+                { name: "Visionary", points: 23500, description: "Sees the future", requirements: "Predict and prepare for trends" },
+                { name: "Strategist", points: 27100, description: "Plans ahead", requirements: "Create long-term guides" },
+                { name: "Analyst", points: 31000, description: "Deep thinker", requirements: "Provide in-depth analysis" },
+                { name: "Researcher", points: 35200, description: "Finds answers", requirements: "Research and share findings" },
+                { name: "Developer", points: 39700, description: "Builds tools", requirements: "Create tools for community" },
+                { name: "Engineer", points: 44500, description: "Solves problems", requirements: "Solve complex issues" },
+                { name: "Scientist", points: 49600, description: "Tests theories", requirements: "Conduct and share experiments" },
+                { name: "Inventor", points: 55000, description: "Creates new things", requirements: "Invent new methods" },
+                { name: "Philosopher", points: 60700, description: "Questions everything", requirements: "Stimulate deep discussions" },
+                { name: "Wizard", points: 66700, description: "Magical solutions", requirements: "Solve seemingly impossible problems" },
+                { name: "Ninja", points: 73000, description: "Stealthy helper", requirements: "Help quietly and effectively" },
+                { name: "Samurai", points: 79600, description: "Honorable member", requirements: "Exemplify forum values" },
+                { name: "Jedi", points: 86500, description: "Uses the force", requirements: "Guide many to knowledge" },
+                { name: "Guardian", points: 93700, description: "Protects community", requirements: "Keep forum positive" },
+                { name: "Immortal", points: 101200, description: "Eternal contributor", requirements: "Years of consistent contribution" }
+            ],
+            actions: {
+                register: 5,
+                firstPost: 5,
+                post: 2,
+                likeReceived: 1,
+                helpfulMark: 10,
+                createThread: 5,
+                createTutorial: 15,
+                solveProblem: 20
+            }
+        };
         
         // Генерация уникального ID устройства
         function getDeviceId() {
@@ -596,10 +824,6 @@ By continuing, you agree to our use of cookies.</p>
             return adj + name + Math.floor(Math.random() * 100);
         }
         
-        function getRandomLevel() {
-            return levels[Math.floor(Math.random() * levels.length)];
-        }
-        
         // Сохранение имени пользователя для устройства
         function getSavedUsername(deviceId) {
             const usernameKey = 'username_' + deviceId;
@@ -611,91 +835,73 @@ By continuing, you agree to our use of cookies.</p>
             return username;
         }
         
-        // Сохранение уровня эксперта для устройства
-        function getSavedLevel(deviceId) {
-            const levelKey = 'level_' + deviceId;
-            let level = localStorage.getItem(levelKey);
-            if (!level) {
-                level = getRandomLevel();
-                localStorage.setItem(levelKey, level);
+        // Получение текущего рейтинга пользователя
+        function getUserRating(deviceId) {
+            const ratingKey = 'userRating_' + deviceId;
+            let rating = localStorage.getItem(ratingKey);
+            if (!rating) {
+                rating = 0; // Начинаем с 0 очков
+                localStorage.setItem(ratingKey, rating);
             }
-            return level;
+            return parseInt(rating);
         }
         
-        // Система просмотров, лайков и комментариев
-        function setupThreadInteractions() {
-            const threads = document.querySelectorAll('.thread-item');
-            
-            threads.forEach(thread => {
-                const threadId = thread.getAttribute('data-id');
-                const likeBtn = thread.querySelector('.icon-like');
-                const likeCount = thread.querySelector('.like-count');
-                const viewCount = thread.querySelector('.view-count');
-                
-                // Инициализация значений из localStorage
-                if (localStorage.getItem('cookiesAccepted') === 'true') {
-                    // Просмотры
-                    if (!localStorage.getItem(`viewed_${threadId}`)) {
-                        localStorage.setItem(`viewed_${threadId}`, 'true');
-                        const currentViews = parseInt(viewCount.textContent);
-                        viewCount.textContent = currentViews + 1;
-                    }
-                    
-                    // Лайки
-                    likeBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        if (!localStorage.getItem(`liked_${threadId}`)) {
-                            localStorage.setItem(`liked_${threadId}`, 'true');
-                            const currentLikes = parseInt(likeCount.textContent);
-                            likeCount.textContent = currentLikes + 1;
-                            likeBtn.classList.add('liked');
-                        }
-                    });
-                }
-            });
-        }
-        
-        // Обработка cookie
-        document.getElementById('acceptCookies').addEventListener('click', function() {
-            localStorage.setItem('cookiesAccepted', 'true');
-            document.getElementById('cookieConsent').style.display = 'none';
-            setupThreadInteractions();
-        });
-        
-        // Инициализация при загрузке
-        document.addEventListener('DOMContentLoaded', () => {
+        // Получение текущего уровня пользователя
+        function getUserLevel(points) {
+            for (let i = ratingSystem.levels.length - 1; i >= 0; i--) {
+                if (points >= ratingSystem.levels[i].
 
-// Получаем ID устройства
-            const deviceId = getDeviceId();
+points) {
+                    return ratingSystem.levels[i];
+                }
+            }
+            return ratingSystem.levels[0];
+        }
+        
+        // Получение следующего уровня
+        function getNextLevel(currentLevel) {
+            const currentIndex = ratingSystem.levels.findIndex(level => level.name === currentLevel.name);
+            if (currentIndex < ratingSystem.levels.length - 1) {
+                return ratingSystem.levels[currentIndex + 1];
+            }
+            return null;
+        }
+        
+        // Обновление рейтинга пользователя
+        function updateUserRating(deviceId, action) {
+            const ratingKey = 'userRating_' + deviceId;
+            let currentRating = getUserRating(deviceId);
             
-            // Установка имени и уровня для устройства
-            document.getElementById('randomUsername').textContent = getSavedUsername(deviceId);
-            document.getElementById('expertBadge').textContent = getSavedLevel(deviceId);
-            
-            // Показать cookie уведомление, если не принято
-            if (localStorage.getItem('cookiesAccepted') !== 'true') {
-                document.getElementById('cookieConsent').style.display = 'block';
-            } else {
-                document.getElementById('cookieConsent').style.display = 'none';
+            if (ratingSystem.actions[action]) {
+                currentRating += ratingSystem.actions[action];
+                localStorage.setItem(ratingKey, currentRating);
             }
             
-            // Инициализация системы взаимодействий
-            setupThreadInteractions();
+            return currentRating;
+        }
+        
+        // Отображение системы рейтингов
+        function showRatingSystem() {
+            const deviceId = getDeviceId();
+            const currentRating = getUserRating(deviceId);
+            const currentLevel = getUserLevel(currentRating);
+            const nextLevel = getNextLevel(currentLevel);
             
-            // Анимация при загрузке (оригинальная)
-            const elements = document.querySelectorAll('.category-card, .thread-item, .btn');
+            // Установка текущего уровня
+            document.getElementById('currentRatingBadge').textContent = currentLevel.name;
             
-            elements.forEach((el, i) => {
-                setTimeout(() => {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }, 100 * i);
-                
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            });
-        });
-    </script>
-</body>
-</html>
+            // Установка прогресса
+            let progress = 0;
+            let progressText = "Max level reached!";
+            
+            if (nextLevel) {
+                progress = ((currentRating - currentLevel.points) / (nextLevel.points - currentLevel.points)) * 100;
+                progressText = ${currentRating - currentLevel.points}/${nextLevel.points - currentLevel.points} points to next level;
+            }
+            
+            document.getElementById('progressBar').style.width = ${progress}%;
+            document.getElementById('progressText').textContent = progressText;
+            
+            // Заполнение всех уровней
+            const ratingLevelsContainer = document.getElementById('ratingLevels');
+            ratingLevelsContainer.innerHTML = '';

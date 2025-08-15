@@ -13,6 +13,8 @@
             --dark: #111111;
             --darker: #080808;
             --light: #f0f0f0;
+            --sidebar-collapsed: 60px; /* Уменьшил ширину скрытого меню на ~1/10 от 200px */
+            --sidebar-expanded: 200px;
         }
         
         * {
@@ -32,11 +34,92 @@
             overflow-x: hidden;
         }
         
+        /* Боковое меню */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: var(--sidebar-collapsed);
+            background: rgba(8, 8, 8, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(0, 255, 170, 0.2);
+            transition: all 0.3s ease;
+            z-index: 80;
+            overflow: hidden;
+        }
+        
+        .sidebar:hover {
+            width: var(--sidebar-expanded);
+        }
+        
+        .sidebar:hover ~ .logo .logo-text {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .sidebar-profile {
+            padding: 20px;
+            white-space: nowrap;
+            border-bottom: 1px solid rgba(0, 255, 170, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .sidebar:hover .sidebar-profile {
+            opacity: 1;
+        }
+        
+        .profile-name {
+            color: var(--primary);
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        
+        .profile-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: var(--darker);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        /* Cookie уведомление */
+        .cookie-consent {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(8, 8, 8, 0.95);
+            border: 1px solid var(--primary);
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 350px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .cookie-consent button {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        /* Оригинальные стили (без изменений) */
         .logo {
             position: fixed;
             top: 25px;
             left: 25px;
             z-index: 100;
+            transition: all 0.3s ease;
         }
         
         .logo-text {
@@ -50,9 +133,10 @@
             text-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
             animation: logoGlow 3s ease-in-out infinite alternate;
             font-style: italic;
+            transition: opacity 0.3s ease;
         }
-        
-        @keyframes logoGlow {
+
+@keyframes logoGlow {
             0% { text-shadow: 0 0 10px rgba(0, 255, 170, 0.3); }
             100% { text-shadow: 0 0 20px rgba(255, 85, 0, 0.3); }
         }
@@ -109,8 +193,15 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 120px 40px 80px;
+            margin-left: var(--sidebar-collapsed);
+            transition: margin-left 0.3s ease;
         }
         
+        .sidebar:hover ~ .container {
+            margin-left: var(--sidebar-expanded);
+        }
+
+        /* Остальные оригинальные стили остаются без изменений */
         .ascii-art {
             color: var(--primary-light);
             white-space: pre;
@@ -140,8 +231,7 @@
         }
         
         @keyframes scanline {
-
-0% { top: 0; }
+            0% { top: 0; }
             100% { top: 100%; }
         }
         
@@ -171,7 +261,6 @@
             font-size: 14px;
         }
 
-        /* Forum specific styles */
         .forum-header {
             text-align: center;
             margin-bottom: 40px;
@@ -192,7 +281,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 25px;
-            margin-bottom: 40px;
+
+margin-bottom: 40px;
         }
 
         .category-card {
@@ -232,7 +322,6 @@
             font-size: 14px;
         }
 
-        /* Thread styles */
         .thread-list {
             margin-top: 30px;
         }
@@ -296,15 +385,13 @@
             margin: 20px 0;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
                 padding: 100px 20px 60px;
             }
             
             .categories {
-
-grid-template-columns: 1fr;
+                grid-template-columns: 1fr;
             }
             
             nav {
@@ -314,16 +401,27 @@ grid-template-columns: 1fr;
     </style>
 </head>
 <body>
+    <!-- Боковое меню -->
+    <div class="sidebar glass">
+        <div class="sidebar-profile">
+            <div class="profile-name" id="randomUsername">Guest</div>
+            <div class="profile-badge" id="expertBadge">Newbie</div>
+        </div>
+    </div>
+    
+    <!-- Оригинальный логотип -->
     <div class="logo">
         <span class="logo-text">Wixty Forum</span>
     </div>
     
+    <!-- Оригинальная навигация -->
     <nav>
         <a href="https://steklys.github.io/WixtyFirmwares.github.io/" target="_self">Main Site</a>
         <a href="#categories">Categories</a>
         <a href="#threads">Threads</a>
     </nav>
     
+    <!-- Оригинальный контент -->
     <div class="container">
         <div class="forum-header">
             <h1>Wixty Firmwares Community</h1>
@@ -335,7 +433,8 @@ grid-template-columns: 1fr;
             <div class="categories">
                 <div class="category-card glass" onclick="window.location.href='#threads'">
                     <h3 class="category-title">📌 Announcements</h3>
-                    <p class="category-desc">Official announcements from Wixty team about new firmware releases and updates.</p>
+
+<p class="category-desc">Official announcements from Wixty team about new firmware releases and updates.</p>
                     <div class="category-stats">
                         <span>24 Threads</span>
                         <span>156 Posts</span>
@@ -392,9 +491,8 @@ grid-template-columns: 1fr;
             <h2 style="color: var(--primary-light); margin-bottom: 20px;">Latest Threads</h2>
             
             <div class="thread-list">
-                <div class="thread-item glass">
-
-<div class="thread-header">
+                <div class="thread-item glass" data-id="1">
+                    <div class="thread-header">
                         <a href="#" class="thread-title">Firmware Toolkit v2.5.0 Release Notes</a>
                         <span class="thread-meta">Today, 14:30</span>
                     </div>
@@ -402,14 +500,15 @@ grid-template-columns: 1fr;
                     <div class="thread-footer">
                         <span>Posted by <strong style="color: var(--primary-light);">WixtyAdmin</strong></span>
                         <div class="thread-stats">
-                            <span class="thread-stat">👍 24</span>
-                            <span class="thread-stat">💬 8</span>
-                            <span class="thread-stat">👁️ 156</span>
+                            <span class="thread-stat"><span class="icon-like"></span> <span class="like-count">24</span></span>
+                            <span class="thread-stat"><span class="icon-comment"></span> <span class="comment-count">8</span></span>
+                            <span class="thread-stat"><span class="icon-views"></span> <span class="view-count">156</span></span>
                         </div>
-                    </div>
+
+</div>
                 </div>
                 
-                <div class="thread-item glass">
+                <div class="thread-item glass" data-id="2">
                     <div class="thread-header">
                         <a href="#" class="thread-title">How to unlock Samsung NVMe drivers</a>
                         <span class="thread-meta">Yesterday, 18:45</span>
@@ -418,14 +517,14 @@ grid-template-columns: 1fr;
                     <div class="thread-footer">
                         <span>Posted by <strong style="color: var(--primary-light);">FirmwareHacker</strong></span>
                         <div class="thread-stats">
-                            <span class="thread-stat">👍 42</span>
-                            <span class="thread-stat">💬 15</span>
-                            <span class="thread-stat">👁️ 287</span>
+                            <span class="thread-stat"><span class="icon-like"></span> <span class="like-count">42</span></span>
+                            <span class="thread-stat"><span class="icon-comment"></span> <span class="comment-count">15</span></span>
+                            <span class="thread-stat"><span class="icon-views"></span> <span class="view-count">287</span></span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="thread-item glass">
+                <div class="thread-item glass" data-id="3">
                     <div class="thread-header">
                         <a href="#" class="thread-title">Bootloader Kit not recognizing device</a>
                         <span class="thread-meta">2 days ago, 09:12</span>
@@ -434,14 +533,14 @@ grid-template-columns: 1fr;
                     <div class="thread-footer">
                         <span>Posted by <strong style="color: var(--primary-light);">NewUser123</strong></span>
                         <div class="thread-stats">
-                            <span class="thread-stat">👍 5</span>
-                            <span class="thread-stat">💬 12</span>
-                            <span class="thread-stat">👁️ 89</span>
+                            <span class="thread-stat"><span class="icon-like"></span> <span class="like-count">5</span></span>
+                            <span class="thread-stat"><span class="icon-comment"></span> <span class="comment-count">12</span></span>
+                            <span class="thread-stat"><span class="icon-views"></span> <span class="view-count">89</span></span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="thread-item glass">
+                <div class="thread-item glass" data-id="4">
                     <div class="thread-header">
                         <a href="#" class="thread-title">Custom ROM for ThinkPad T480</a>
                         <span class="thread-meta">3 days ago, 22:30</span>
@@ -450,9 +549,9 @@ grid-template-columns: 1fr;
                     <div class="thread-footer">
                         <span>Posted by <strong style="color: var(--primary-light);">ThinkPadModder</strong></span>
                         <div class="thread-stats">
-                            <span class="thread-stat">👍 78</span>
-                            <span class="thread-stat">💬 24</span>
-                            <span class="thread-stat">👁️ 432</span>
+                            <span class="thread-stat"><span class="icon-like"></span> <span class="like-count">78</span></span>
+                            <span class="thread-stat"><span class="icon-comment"></span> <span class="comment-count">24</span></span>
+                            <span class="thread-stat"><span class="icon-views"></span> <span class="view-count">432</span></span>
                         </div>
                     </div>
                 </div>
@@ -464,13 +563,126 @@ grid-template-columns: 1fr;
     
     <footer class="glass">
         <p>© 2025 Wixty Firmwares Forum. All rights reserved.</p>
-
-<p style="margin-top: 10px;">Community-driven platform for firmware enthusiasts.</p>
+        <p style="margin-top: 10px;">Community-driven platform for firmware enthusiasts.</p>
     </footer>
 
+    <!-- Cookie уведомление -->
+    <div class="cookie-consent glass" id="cookieConsent">
+        <p>We use cookies to track thread views and improve your experience.
+
+By continuing, you agree to our use of cookies.</p>
+        <button id="acceptCookies">Accept</button>
+    </div>
+
     <script>
-        // Анимация при загрузке
+        // Генерация случайного имени пользователя и уровня эксперта
+        const usernames = ["CyberHacker", "FirmwareGuru", "BiosMaster", "CodeBreaker", "KernelWizard"];
+        const adjectives = ["Quantum", "Neon", "Cyber", "Binary", "Hex"];
+        const levels = ["Newbie", "Enthusiast", "Expert", "Guru", "Legend"];
+        
+        // Генерация уникального ID устройства
+        function getDeviceId() {
+            let deviceId = localStorage.getItem('deviceId');
+            if (!deviceId) {
+                deviceId = 'device_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('deviceId', deviceId);
+            }
+            return deviceId;
+        }
+        
+        function getRandomUsername() {
+            const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+            const name = usernames[Math.floor(Math.random() * usernames.length)];
+            return adj + name + Math.floor(Math.random() * 100);
+        }
+        
+        function getRandomLevel() {
+            return levels[Math.floor(Math.random() * levels.length)];
+        }
+        
+        // Сохранение имени пользователя для устройства
+        function getSavedUsername(deviceId) {
+            const usernameKey = 'username_' + deviceId;
+            let username = localStorage.getItem(usernameKey);
+            if (!username) {
+                username = getRandomUsername();
+                localStorage.setItem(usernameKey, username);
+            }
+            return username;
+        }
+        
+        // Сохранение уровня эксперта для устройства
+        function getSavedLevel(deviceId) {
+            const levelKey = 'level_' + deviceId;
+            let level = localStorage.getItem(levelKey);
+            if (!level) {
+                level = getRandomLevel();
+                localStorage.setItem(levelKey, level);
+            }
+            return level;
+        }
+        
+        // Система просмотров, лайков и комментариев
+        function setupThreadInteractions() {
+            const threads = document.querySelectorAll('.thread-item');
+            
+            threads.forEach(thread => {
+                const threadId = thread.getAttribute('data-id');
+                const likeBtn = thread.querySelector('.icon-like');
+                const likeCount = thread.querySelector('.like-count');
+                const viewCount = thread.querySelector('.view-count');
+                
+                // Инициализация значений из localStorage
+                if (localStorage.getItem('cookiesAccepted') === 'true') {
+                    // Просмотры
+                    if (!localStorage.getItem(`viewed_${threadId}`)) {
+                        localStorage.setItem(`viewed_${threadId}`, 'true');
+                        const currentViews = parseInt(viewCount.textContent);
+                        viewCount.textContent = currentViews + 1;
+                    }
+                    
+                    // Лайки
+                    likeBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        if (!localStorage.getItem(`liked_${threadId}`)) {
+                            localStorage.setItem(`liked_${threadId}`, 'true');
+                            const currentLikes = parseInt(likeCount.textContent);
+                            likeCount.textContent = currentLikes + 1;
+                            likeBtn.classList.add('liked');
+                        }
+                    });
+                }
+            });
+        }
+        
+        // Обработка cookie
+        document.getElementById('acceptCookies').addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookieConsent').style.display = 'none';
+            setupThreadInteractions();
+        });
+        
+        // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', () => {
+
+// Получаем ID устройства
+            const deviceId = getDeviceId();
+            
+            // Установка имени и уровня для устройства
+            document.getElementById('randomUsername').textContent = getSavedUsername(deviceId);
+            document.getElementById('expertBadge').textContent = getSavedLevel(deviceId);
+            
+            // Показать cookie уведомление, если не принято
+            if (localStorage.getItem('cookiesAccepted') !== 'true') {
+                document.getElementById('cookieConsent').style.display = 'block';
+            } else {
+                document.getElementById('cookieConsent').style.display = 'none';
+            }
+            
+            // Инициализация системы взаимодействий
+            setupThreadInteractions();
+            
+            // Анимация при загрузке (оригинальная)
             const elements = document.querySelectorAll('.category-card, .thread-item, .btn');
             
             elements.forEach((el, i) => {
